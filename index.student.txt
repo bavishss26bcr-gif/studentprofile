@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campusly - Student Profile System</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f7f7fc;
+    color: #25243d;
+}
+
+button, input, select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    width: 240px;
+    height: 100vh;
+    position: fixed;
+    background: white;
+    padding: 30px 20px;
+    border-right: 1px solid #eeeef5;
+}
+
+.logo {
+    font-family: 'Plus Jakarta Sans';
+    font-size: 25px;
+    font-weight: 800;
+    color: #7564e8;
+    margin-bottom: 55px;
+}
+
+.logo span {
+    color: #f3a45d;
+}
+
+.sidebar h5 {
+    color: #aaa;
+    margin: 20px 10px;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 14px;
+    text-decoration: none;
+    color: #77778d;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: #f0edff;
+    color: #7564e8;
+}
+
+/* MAIN CONTENT */
+
+.main {
+    margin-left: 240px;
+    padding: 30px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+header h2 {
+    font-family: 'Plus Jakarta Sans';
+}
+
+.add-btn {
+    border: none;
+    background: #7564e8;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.add-btn:hover {
+    background: #5f4ed2;
+}
+
+/* WELCOME BANNER */
+
+.banner {
+    background: linear-gradient(110deg, #e9e5ff, #e8f2ff);
+    padding: 35px;
+    border-radius: 18px;
+    margin-bottom: 25px;
+}
+
+.banner h1 {
+    font-family: 'Plus Jakarta Sans';
+    font-size: 29px;
+    margin-bottom: 10px;
+}
+
+.banner p {
+    color: #77758f;
+}
+
+/* STATISTICS */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    padding: 22px;
+    border-radius: 15px;
+}
+
+.stat-card h4 {
+    font-size: 13px;
+    color: #77778d;
+    margin-bottom: 12px;
+}
+
+.stat-card h2 {
+    font-size: 28px;
+    font-family: 'Plus Jakarta Sans';
+}
+
+.purple { background: #f0edff; }
+.green { background: #eaf8f2; }
+.orange { background: #fff4e9; }
+.blue { background: #eaf3ff; }
+
+/* STUDENT SECTION */
+
+.content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 260px;
+    gap: 20px;
+}
+
+.panel {
+    background: white;
+    padding: 22px;
+    border-radius: 15px;
+    border: 1px solid #eeeef5;
+}
+
+.panel h2 {
+    font-family: 'Plus Jakarta Sans';
+    font-size: 19px;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #999;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+/* SEARCH */
+
+.toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.toolbar input,
+.toolbar select {
+    padding: 12px;
+    border: 1px solid #eeeef5;
+    border-radius: 9px;
+    outline: none;
+    min-width: 0;
+}
+
+.toolbar input {
+    flex: 1;
+}
+
+.toolbar select {
+    max-width: 180px;
+}
+
+/* TABLE */
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+th {
+    background: #fafafe;
+    color: #999;
+    font-size: 11px;
+    text-align: left;
+    padding: 14px 10px;
+}
+
+td {
+    padding: 14px 10px;
+    border-bottom: 1px solid #eeeef5;
+    font-size: 12px;
+}
+
+.avatar {
+    display: inline-grid;
+    place-items: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+    background: #eeeaff;
+    color: #7564e8;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.status {
+    background: #e8f7f0;
+    color: #269b70;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+}
+
+.inactive {
+    background: #f1f1f4;
+    color: #888;
+}
+
+.action-btn {
+    border: none;
+    background: #f0edff;
+    color: #7564e8;
+    padding: 7px;
+    border-radius: 6px;
+    margin: 2px;
+}
+
+.delete-btn {
+    background: #fff0f0;
+    color: #d66b6b;
+}
+
+/* DEPARTMENT PANEL */
+
+.department {
+    margin: 20px 0;
+}
+
+.department p {
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.progress {
+    background: #eeeef5;
+    height: 7px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress div {
+    background: #7564e8;
+    height: 100%;
+    border-radius: 10px;
+}
+
+/* MODAL */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #24213e80;
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    width: 650px;
+    max-width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 28px;
+    border-radius: 18px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.close {
+    border: none;
+    background: #f0eff6;
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #777;
+}
+
+.form-group input,
+.form-group select {
+    padding: 12px;
+    border: 1px solid #eeeef5;
+    border-radius: 9px;
+    outline: none;
+    width: 100%;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #7564e8;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.cancel-btn {
+    padding: 12px 18px;
+    border: 1px solid #eee;
+    background: white;
+    border-radius: 9px;
+}
+
+.save-btn {
+    padding: 12px 20px;
+    background: #7564e8;
+    color: white;
+    border: none;
+    border-radius: 9px;
+}
+
+/* PROFILE */
+
+.profile-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.profile-info div {
+    background: #f7f7fc;
+    padding: 13px;
+    border-radius: 9px;
+    overflow-wrap: anywhere;
+}
+
+.profile-info small {
+    display: block;
+    color: #999;
+    margin-bottom: 6px;
+}
+
+.profile-info strong {
+    font-size: 13px;
+}
+
+/* TOAST */
+
+#toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #25243d;
+    color: white;
+    padding: 14px 20px;
+    border-radius: 10px;
+    display: none;
+    z-index: 200;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 1100px) {
+    .content {
+        grid-template-columns: 1fr;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 700px) {
+    .sidebar {
+        display: none;
+    }
+
+    .main {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    header h2 {
+        font-size: 17px;
+    }
+
+    .banner h1 {
+        font-size: 23px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .stat-card {
+        padding: 15px;
+    }
+
+    .toolbar {
+        flex-direction: column;
+    }
+
+    .toolbar select {
+        max-width: none;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full {
+        grid-column: auto;
+    }
+
+    .profile-info {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+    <div class="logo">campusly<span>.</span></div>
+
+    <h5>WORKSPACE</h5>
+
+    <a href="#" class="active">⌂ Overview</a>
+    <a href="#students">▤ Students</a>
+</aside>
+
+<main class="main">
+
+<header>
+    <h2>Student Dashboard</h2>
+    <button class="add-btn" onclick="openForm()">＋ Add Student</button>
+</header>
+
+<section class="banner">
+    <h1>Welcome, Administrator ✨</h1>
+    <p>Manage your student community in one place.</p>
+</section>
+
+<section class="stats">
+
+    <div class="stat-card purple">
+        <h4>Total Students</h4>
+        <h2 id="totalStudents">0</h2>
+    </div>
+
+    <div class="stat-card green">
+        <h4>Active Students</h4>
+        <h2 id="activeStudents">0</h2>
+    </div>
+
+    <div class="stat-card orange">
+        <h4>Average CGPA</h4>
+        <h2 id="averageCgpa">0.00</h2>
+    </div>
+
+    <div class="stat-card blue">
+        <h4>Attendance</h4>
+        <h2 id="averageAttendance">0%</h2>
+    </div>
+
+</section>
+
+<section class="content">
+
+    <div class="panel" id="students">
+
+        <h2>Student Profiles</h2>
+        <p class="subtitle">Manage your student information.</p>
+
+        <div class="toolbar">
+
+            <input
+                type="search"
+                id="search"
+                placeholder="Search name or roll number..."
+            >
+
+            <select id="filter">
+                <option value="">All Departments</option>
+                <option>Computer Science</option>
+                <option>Information Technology</option>
+                <option>Commerce</option>
+                <option>Mechanical</option>
+                <option>Electronics</option>
+                <option>Business Administration</option>
+            </select>
+
+            <button class="add-btn" onclick="exportCSV()">Export</button>
+
+        </div>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>STUDENT</th>
+                        <th>DEPARTMENT</th>
+                        <th>YEAR</th>
+                        <th>CGPA</th>
+                        <th>ATTENDANCE</th>
+                        <th>STATUS</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+
+                <tbody id="studentTable"></tbody>
+
+            </table>
+
+        </div>
+
+        <p id="emptyMessage" style="display:none;padding:25px;text-align:center;color:#999">
+            No students found.
+        </p>
+
+    </div>
+
+    <aside class="panel">
+
+        <h2>Departments</h2>
+        <p class="subtitle">Student distribution</p>
+
+        <div id="departmentList"></div>
+
+    </aside>
+
+</section>
+
+</main>
+
+<!-- ADD / EDIT STUDENT MODAL -->
+
+<div class="modal" id="studentModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <div>
+                <h2 id="modalTitle">Add Student</h2>
+                <p class="subtitle">Enter student information</p>
+            </div>
+
+            <button class="close" onclick="closeModal('studentModal')">×</button>
+        </div>
+
+        <form id="studentForm">
+
+            <input type="hidden" id="studentId">
+
+            <div class="form-grid">
+
+                <div class="form-group full">
+                    <label>Full Name *</label>
+                    <input id="name" name="name" required maxlength="70">
+                </div>
+
+                <div class="form-group">
+                    <label>Roll Number *</label>
+                    <input id="roll" name="roll" required maxlength="25">
+                </div>
+
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input id="email" name="email" type="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input id="phone" name="phone" type="tel">
+                </div>
+
+                <div class="form-group">
+                    <label>Date of Birth</label>
+                    <input id="dob" name="dob" type="date">
+                </div>
+
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select id="gender" name="gender">
+                        <option value="">Select Gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Non-binary</option>
+                        <option>Prefer not to say</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Department *</label>
+                    <select id="department" name="department" required>
+                        <option value="">Select Department</option>
+                        <option>Computer Science</option>
+                        <option>Information Technology</option>
+                        <option>Commerce</option>
+                        <option>Mechanical</option>
+                        <option>Electronics</option>
+                        <option>Business Administration</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Course</label>
+                    <input id="course" name="course" placeholder="B.Sc Computer Science">
+                </div>
+
+                <div class="form-group">
+                    <label>Year</label>
+                    <select id="year" name="year">
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                        <option value="5">5th Year</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Semester</label>
+                    <select id="semester" name="semester">
+                        <option value="1">Semester 1</option>
+                        <option value="2">Semester 2</option>
+                        <option value="3">Semester 3</option>
+                        <option value="4">Semester 4</option>
+                        <option value="5">Semester 5</option>
+                        <option value="6">Semester 6</option>
+                        <option value="7">Semester 7</option>
+                        <option value="8">Semester 8</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>CGPA (0-10)</label>
+                    <input id="cgpa" name="cgpa" type="number" min="0" max="10" step="0.01" value="0">
+                </div>
+
+                <div class="form-group">
+                    <label>Attendance (%)</label>
+                    <input id="attendance" name="attendance" type="number" min="0" max="100" value="0">
+                </div>
+
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="status" name="status">
+                        <option>Active</option>
+                        <option>Inactive</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="form-buttons">
+
+                <button type="button" class="cancel-btn"
+                    onclick="closeModal('studentModal')">
+                    Cancel
+                </button>
+
+                <button type="submit" class="save-btn">
+                    Save Student
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- VIEW PROFILE MODAL -->
+
+<div class="modal" id="profileModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2>Student Profile</h2>
+            <button class="close" onclick="closeModal('profileModal')">×</button>
+        </div>
+
+        <div id="profileDetails"></div>
+
+    </div>
+
+</div>
+
+<div id="toast"></div>
+
+<script>
+
+/* SAMPLE STUDENT DATA */
+
+const sampleStudents = [
+    {
+        id: 1,
+        name: "Aadhira Kumar",
+        roll: "CS2026001",
+        email: "aadhira@gmail.com",
+        phone: "9876543210",
+        dob: "2005-04-12",
+        gender: "Female",
+        department: "Computer Science",
+        course: "B.Sc Computer Science",
+        year: 2,
+        semester: 3,
+        cgpa: 9.1,
+        attendance: 94,
+        status: "Active"
+    },
+    {
+        id: 2,
+        name: "Arjun Prakash",
+        roll: "IT2026008",
+        email: "arjun@gmail.com",
+        phone: "9876543211",
+        dob: "2004-11-03",
+        gender: "Male",
+        department: "Information Technology",
+        course: "B.Tech IT",
+        year: 3,
+        semester: 5,
+        cgpa: 8.4,
+        attendance: 88,
+        status: "Active"
+    },
+    {
+        id: 3,
+        name: "Meera Raj",
+        roll: "CM2026012",
+        email: "meera@gmail.com",
+        phone: "9876543212",
+        dob: "2005-07-22",
+        gender: "Female",
+        department: "Commerce",
+        course: "B.Com",
+        year: 2,
+        semester: 4,
+        cgpa: 8.8,
+        attendance: 96,
+        status: "Active"
+    }
+];
+
+/* LOCAL STORAGE */
+
+let students;
+
+try {
+    students = JSON.parse(localStorage.getItem("students")) || sampleStudents;
+} catch {
+    students = sampleStudents;
+}
+
+function saveData() {
+    localStorage.setItem("students", JSON.stringify(students));
+}
+
+/* SAFE HTML OUTPUT */
+
+function escapeHTML(value = "") {
+    return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    })[char]);
+}
+
+function initials(name) {
+    return name.trim().split(/\s+/).slice(0, 2)
+        .map(word => word[0]).join("").toUpperCase();
+}
+
+/* RENDER DASHBOARD */
+
+function renderDashboard() {
+
+    const total = students.length;
+
+    const active = students.filter(
+        s => s.status === "Active"
+    ).length;
+
+    const cgpa = total
+        ? students.reduce((sum, s) => sum + Number(s.cgpa), 0) / total
+        : 0;
+
+    const attendance = total
+        ? students.reduce((sum, s) => sum + Number(s.attendance), 0) / total
+        : 0;
+
+    document.getElementById("totalStudents").textContent = total;
+
+    document.getElementById("activeStudents").textContent = active;
+
+    document.getElementById("averageCgpa").textContent = cgpa.toFixed(2);
+
+    document.getElementById("averageAttendance").textContent =
+        Math.round(attendance) + "%";
+
+    renderStudents();
+    renderDepartments();
+}
+
+/* DISPLAY STUDENTS */
+
+function renderStudents() {
+
+    const search = document.getElementById("search")
+        .value.toLowerCase().trim();
+
+    const department = document.getElementById("filter").value;
+
+    const filtered = students.filter(student => {
+
+        const matchesSearch =
+            `${student.name} ${student.roll} ${student.email}`
+            .toLowerCase().includes(search);
+
+        const matchesDepartment =
+            !department || student.department === department;
+
+        return matchesSearch && matchesDepartment;
+    });
+
+    const table = document.getElementById("studentTable");
+
+    table.innerHTML = filtered.map(student => `
+
+        <tr>
+
+            <td>
+                <span class="avatar">
+                    ${escapeHTML(initials(student.name))}
+                </span>
+                ${escapeHTML(student.name)}
+                <br>
+                <small>${escapeHTML(student.roll)}</small>
+            </td>
+
+            <td>${escapeHTML(student.department)}</td>
+
+            <td>${student.year}</td>
+
+            <td>${Number(student.cgpa).toFixed(2)}</td>
+
+            <td>${student.attendance}%</td>
+
+            <td>
+                <span class="status ${student.status === "Inactive" ? "inactive" : ""}">
+                    ${escapeHTML(student.status)}
+                </span>
+            </td>
+
+            <td>
+                <button class="action-btn"
+                    onclick="viewStudent(${student.id})">
+                    View
+                </button>
+
+                <button class="action-btn"
+                    onclick="editStudent(${student.id})">
+                    Edit
+                </button>
+
+                <button class="action-btn delete-btn"
+                    onclick="deleteStudent(${student.id})">
+                    Delete
+                </button>
+            </td>
+
+        </tr>
+
+    `).join("");
+
+    document.getElementById("emptyMessage").style.display =
+        filtered.length ? "none" : "block";
+}
+
+/* DEPARTMENT STATISTICS */
+
+function renderDepartments() {
+
+    const departments = {};
+
+    students.forEach(student => {
+        departments[student.department] =
+            (departments[student.department] || 0) + 1;
+    });
+
+    const list = document.getElementById("departmentList");
+
+    const entries = Object.entries(departments)
+        .sort((a, b) => b[1] - a[1]);
+
+    const max = Math.max(1, ...entries.map(item => item[1]));
+
+    list.innerHTML = entries.map(([name, count]) => `
+
+        <div class="department">
+
+            <p>
+                ${escapeHTML(name)}
+                <strong style="float:right">${count}</strong>
+            </p>
+
+            <div class="progress">
+                <div style="width:${count / max * 100}%"></div>
+            </div>
+
+        </div>
+
+    `).join("");
+}
+
+/* OPEN ADD FORM */
+
+function openForm() {
+
+    document.getElementById("studentForm").reset();
+
+    document.getElementById("studentId").value = "";
+
+    document.getElementById("modalTitle").textContent =
+        "Add Student";
+
+    document.getElementById("studentModal").classList.add("show");
+}
+
+/* CLOSE MODAL */
+
+function closeModal(id) {
+    document.getElementById(id).classList.remove("show");
+}
+
+/* SAVE / UPDATE STUDENT */
+
+document.getElementById("studentForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const formData = new FormData(this);
+
+    const student = Object.fromEntries(formData.entries());
+
+    student.id = Number(document.getElementById("studentId").value)
+        || Date.now();
+
+    student.year = Number(student.year);
+    student.semester = Number(student.semester);
+    student.cgpa = Number(student.cgpa);
+    student.attendance = Number(student.attendance);
+
+    const duplicate = students.some(s =>
+        s.roll.toLowerCase() === student.roll.toLowerCase()
+        && s.id !== student.id
+    );
+
+    if (duplicate) {
+        alert("This roll number already exists!");
+        return;
+    }
+
+    const index = students.findIndex(s => s.id === student.id);
+
+    if (index >= 0) {
+        students[index] = student;
+        showToast("Student updated successfully!");
+    } else {
+        students.unshift(student);
+        showToast("Student added successfully!");
+    }
+
+    saveData();
+
+    renderDashboard();
+
+    closeModal("studentModal");
+
+});
+
+/* EDIT STUDENT */
+
+function editStudent(id) {
+
+    const student = students.find(s => s.id === id);
+
+    if (!student) return;
+
+    openForm();
+
+    document.getElementById("modalTitle").textContent =
+        "Edit Student";
+
+    document.getElementById("studentId").value = student.id;
+
+    Object.keys(student).forEach(key => {
+
+        const field = document.getElementById(key);
+
+        if (field && key !== "id") {
+            field.value = student[key];
+        }
+
+    });
+}
+
+/* VIEW STUDENT */
+
+function viewStudent(id) {
+
+    const student = students.find(s => s.id === id);
+
+    if (!student) return;
+
+    const fields = {
+        "Full Name": student.name,
+        "Roll Number": student.roll,
+        "Email": student.email,
+        "Phone": student.phone,
+        "Date of Birth": student.dob,
+        "Gender": student.gender,
+        "Department": student.department,
+        "Course": student.course,
+        "Year": student.year,
+        "Semester": student.semester,
+        "CGPA": student.cgpa,
+        "Attendance": student.attendance + "%",
+        "Status": student.status
+    };
+
+    document.getElementById("profileDetails").innerHTML = `
+
+        <h2>${escapeHTML(student.name)}</h2>
+
+        <p style="color:#7564e8;margin:10px 0">
+            ${escapeHTML(student.roll)}
+        </p>
+
+        <div class="profile-info">
+
+            ${Object.entries(fields).map(([label, value]) => `
+
+                <div>
+                    <small>${label}</small>
+                    <strong>${escapeHTML(value ?? "Not provided")}</strong>
+                </div>
+
+            `).join("")}
+
+        </div>
+
+        <br>
+
+        <button class="add-btn"
+            onclick="closeModal('profileModal');editStudent(${student.id})">
+            Edit Profile
+        </button>
+
+    `;
+
+    document.getElementById("profileModal").classList.add("show");
+}
+
+/* DELETE STUDENT */
+
+function deleteStudent(id) {
+
+    const student = students.find(s => s.id === id);
+
+    if (!student) return;
+
+    if (confirm("Are you sure you want to delete this student?")) {
+
+        students = students.filter(s => s.id !== id);
+
+        saveData();
+
+        renderDashboard();
+
+        showToast("Student deleted successfully!");
+
+    }
+}
+
+/* SEARCH AND FILTER */
+
+document.getElementById("search")
+.addEventListener("input", renderStudents);
+
+document.getElementById("filter")
+.addEventListener("change", renderStudents);
+
+/* EXPORT CSV */
+
+function exportCSV() {
+
+    if (!students.length) {
+        showToast("No student records to export.");
+        return;
+    }
+
+    const columns = [
+        "name", "roll", "email", "phone", "dob",
+        "gender", "department", "course", "year",
+        "semester", "cgpa", "attendance", "status"
+    ];
+
+    const escapeCSV = value =>
+        '"' + String(value ?? "").replace(/"/g, '""') + '"';
+
+    const rows = [
+        columns.join(","),
+        ...students.map(student =>
+            columns.map(key => escapeCSV(student[key])).join(",")
+        )
+    ];
+
+    const blob = new Blob(
+        ["\uFEFF" + rows.join("\n")],
+        { type: "text/csv;charset=utf-8;" }
+    );
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "student-records.csv";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+
+    showToast("Student report downloaded!");
+}
+
+/* NOTIFICATION */
+
+let toastTimer;
+
+function showToast(message) {
+
+    const toast = document.getElementById("toast");
+
+    toast.textContent = message;
+    toast.style.display = "block";
+
+    clearTimeout(toastTimer);
+
+    toastTimer = setTimeout(() => {
+        toast.style.display = "none";
+    }, 2500);
+}
+
+/* INITIALIZE */
+
+renderDashboard();
+
+</script>
+
+</body>
+</html>
